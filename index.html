@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- when using the mode "code", it's important to specify charset utf-8 -->
+    <meta charset="utf-8" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.1.2/jsoneditor.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.1.2/jsoneditor.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <br>
+      <h1 class="text-center">IFrame Generator Online</h1>
+      <div class="form-group">
+        <label for="iframename">IFrame Name:</label>
+        <input
+          name=""
+          type="text"
+          id="name"
+          value="myIframe"
+          placeholder="Enter Iframe Name"
+          required
+          class="form-control"
+        >
+      </div>
+      <div class="form-group">
+        <label for="iframewidth">IFrame Width:</label>
+        <input
+          name=""
+          type="number"
+          id="width"
+          placeholder="Enter Iframe Width"
+          value="600"
+          required
+          class="form-control"
+        >
+      </div>
+      <div class="form-group">
+        <label for="iframeheight">IFrame Height:</label>
+        <input
+          name=""
+          type="number"
+          id="height"
+          placeholder="Enter Iframe Height"
+          value="400"
+          required
+          class="form-control"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="scrollbar">Scrollbar:</label>
+        <label class="radio-inline"
+          ><input type="radio" name="scrollbar" value="no" checked /> No</label
+        >
+        <label class="radio-inline"
+          ><input type="radio" name="scrollbar" value="yes" /> Yes</label
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="marginwidth">Margin Width:</label>
+        <input
+          name=""
+          type="number"
+          id="marginwidth"
+          placeholder="Enter Margin Width"
+          value="0"
+          required
+          class="form-control"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="marginheight">Margin Height:</label>
+        <input
+          name=""
+          type="number"
+          id="marginheight"
+          placeholder="Enter Margin Height"
+          value="0"
+          required
+          class="form-control"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="border">Border:</label>
+        <label class="radio-inline"
+          ><input type="radio" name="border" value="yes" checked /> Yes</label
+        >
+        <label class="radio-inline"
+          ><input type="radio" name="border" value="no" /> No</label
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="bordertype">Border Type:</label>
+        <label class="radio-inline"
+          ><input type="radio" name="bordertype" value="none" checked /> None</label
+        >
+        <label class="radio-inline"
+          ><input type="radio" name="bordertype" value="hidden" /> Hidden</label
+        >
+        <label class="radio-inline"
+          ><input type="radio" name="bordertype" value="solid" /> Solid</label
+        >
+        <label class="radio-inline"
+          ><input type="radio" name="bordertype" value="dashed" /> Dashed</label
+        >
+        <label class="radio-inline"
+          ><input type="radio" name="bordertype" value="dotted" /> Dotted</label
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="bordersize">Border Size:</label>
+        <input
+          name=""
+          type="number"
+          id="bordersize"
+          placeholder="Enter Border Size"
+          value="0"
+          required
+          class="form-control"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="bordercolor">Border Color:</label>
+        <input
+          name=""
+          type="text"
+          id="bordercolor"
+          placeholder="Enter Border Size"
+          value="ffffff"
+          required
+          class="form-control"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="iframeurl">Iframe URL:</label>
+        <input
+          name=""
+          type="text"
+          id="iframeurl"
+          placeholder="Enter Iframe URL"
+          required
+          class="form-control"
+        >
+      </div>
+
+
+      <div class="form-group">
+        <button id="preview" class="btn btn-danger btn-block">
+          Generate Preview and HTML Code
+        </button>
+      </div>
+
+      <div id="result"></div>
+
+      <div class="form-group">
+        <label for="output">HTML Code:</label>
+        <textarea
+          class="form-control"
+          name=""
+          id="code"
+          cols="30"
+          rows="10"
+          placeholder="HTML Code"
+        ></textarea>
+      </div>
+      <div class="form-group">
+        <button onclick="copytoclipboard()" class="btn btn-primary btn-block">
+          Copy to Clipboard
+        </button>
+      </div>
+    </div>
+  </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script>
+    var result = ""
+    $("#preview").click(function () {
+
+      var name = $("#name").val()
+      var width = $("#width").val()
+      var height = $("#height").val()
+
+      var scrollbar = $("input[name='scrollbar']:checked").val();
+
+      var marginwidth = $("#marginwidth").val()
+      var marginheight = $("#marginheight").val()
+
+      var border = $("input[name='border']:checked").val();
+      console.log(border)
+
+      var bordertype = $("input[name='bordertype']:checked").val();
+      console.log(bordertype)
+
+      var bordersize = $("#bordersize").val()
+
+
+      var bordercolor = $("#bordercolor").val()
+
+      var iframeurl = $("#iframeurl").val()
+
+      console.log(name + width + height + marginwidth + marginheight + border + bordertype + bordersize + bordercolor + iframeurl)
+
+      generateIframe(name,width,height,scrollbar,marginwidth,marginheight,border,bordertype,bordersize,bordercolor,iframeurl)
+
+      
+    })
+
+    function generateIframe(name,width,height,scrollbar,marginwidth,marginheight,border,bordertype,bordersize,bordercolor,iframeurl)
+    {
+      console.log(iframeurl)
+      if(border == "yes"){
+        result = `<iframe src="${iframeurl}" style="border:${bordersize}px #${bordercolor} ${bordertype};" name="${name}" scrolling="${scrollbar}" frameborder="1" marginheight="${marginheight}px" marginwidth="${marginwidth}px" height="${height}px" width="${width}px" allowfullscreen></iframe>`
+        $("#result").html(result)
+        $("#code").html(result)
+      }else{
+      result = `<iframe src="${iframeurl}" style="border:${bordersize}px #${bordercolor} ${bordertype};" name="${name}" scrolling="${scrollbar}" frameborder="0" marginheight="${marginheight}px" marginwidth="${marginwidth}px" height="${height}px" width="${width}px" allowfullscreen></iframe>`
+      $("#result").html(result)
+      $("#code").html(result)
+      }
+    }
+    function copytoclipboard() {
+      /* Get the text field */
+      var copyText = document.getElementById("code");
+
+      /* Select the text field */
+      copyText.select();
+      copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+
+      /* Copy the text inside the text field */
+      document.execCommand("copy");
+
+    }
+  </script>
+</html>
